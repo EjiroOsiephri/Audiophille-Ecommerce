@@ -13,7 +13,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-[#0E0E0E] text-white">
+    <nav className="bg-[#0E0E0E] text-white relative z-50">
       <div className="container mx-auto px-6 lg:px-40 py-4 flex justify-between items-center">
         {/* Hamburger Menu */}
         <div
@@ -86,7 +86,7 @@ export default function Navbar() {
       <div
         className={`absolute top-0 left-0 w-full h-screen bg-[#0E0E0E] flex flex-col items-center justify-center gap-8 text-lg font-medium transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 md:hidden`}
+        } transition-transform duration-300 md:hidden z-40`}
       >
         <Link href="/" onClick={toggleMenu}>
           Home
