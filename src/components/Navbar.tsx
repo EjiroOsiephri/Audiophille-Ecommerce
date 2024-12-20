@@ -1,16 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation"; // Import for active state
 import Link from "next/link";
 import Image from "next/image";
 import cartimage from "../../public/Combined Shape.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get the current route
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const getLinkClass = (route: string) =>
+    `hover:text-[#D87D4A] ${
+      pathname === route ? "text-[#D87D4A]" : ""
+    } transition-colors duration-200`;
 
   return (
     <nav className="bg-[#0E0E0E] text-white relative z-50">
@@ -46,22 +53,22 @@ export default function Navbar() {
         {/* Menu for larger screens */}
         <ul className="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-medium">
           <li>
-            <Link href="/" className="hover:text-[#D87D4A]">
+            <Link href="/" className={getLinkClass("/")}>
               Home
             </Link>
           </li>
           <li>
-            <Link href="/headphones" className="hover:text-[#D87D4A]">
+            <Link href="/headphones" className={getLinkClass("/headphones")}>
               Headphones
             </Link>
           </li>
           <li>
-            <Link href="/speakers" className="hover:text-[#D87D4A]">
+            <Link href="/speakers" className={getLinkClass("/speakers")}>
               Speakers
             </Link>
           </li>
           <li>
-            <Link href="/earphones" className="hover:text-[#D87D4A]">
+            <Link href="/earphones" className={getLinkClass("/earphones")}>
               Earphones
             </Link>
           </li>
@@ -88,16 +95,28 @@ export default function Navbar() {
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 md:hidden z-40`}
       >
-        <Link href="/" onClick={toggleMenu}>
+        <Link href="/" onClick={toggleMenu} className={getLinkClass("/")}>
           Home
         </Link>
-        <Link href="/headphones" onClick={toggleMenu}>
+        <Link
+          href="/headphones"
+          onClick={toggleMenu}
+          className={getLinkClass("/headphones")}
+        >
           Headphones
         </Link>
-        <Link href="/speakers" onClick={toggleMenu}>
+        <Link
+          href="/speakers"
+          onClick={toggleMenu}
+          className={getLinkClass("/speakers")}
+        >
           Speakers
         </Link>
-        <Link href="/earphones" onClick={toggleMenu}>
+        <Link
+          href="/earphones"
+          onClick={toggleMenu}
+          className={getLinkClass("/earphones")}
+        >
           Earphones
         </Link>
       </div>
