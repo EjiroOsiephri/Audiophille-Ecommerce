@@ -23,7 +23,7 @@
   }
 
   body {
-    background-color: var(--background);
+    background-color: #ededed;
     color: var(--foreground);
     font-family: "Manrope", Arial, sans-serif; /* Use Manrope as the primary font */
     font-size: 16px; /* Default font size */
@@ -38,6 +38,11 @@
   h6 {
     font-family: "Manrope", Arial, sans-serif; /* Ensure headings use Manrope */
     font-weight: 700; /* Bold for headings */
+  }
+
+  img {
+    width: auto;
+    height: auto;
   }
 
   p,

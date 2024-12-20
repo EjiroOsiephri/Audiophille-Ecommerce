@@ -6,16 +6,14 @@ const ProductPage = () => {
     <div className="bg-white">
       {/* ZX9 Speaker Section */}
       <section className="bg-[#D87D4A] px-6 py-12 md:py-24 mx-4 md:mx-20 flex flex-col md:flex-row items-center text-white rounded-lg">
-        <div className="md:w-1/2 flex justify-center">
-          <div
-            className="w-full h-80 relative"
-            style={{
-              backgroundImage: 'url("/image-removebg-preview(44).png")',
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "bottom",
-            }}
-          ></div>
+        <div className="relative w-full md:w-1/2 h-80">
+          <Image
+            src="/image-removebg-preview(44).png"
+            alt="ZX9 Speaker"
+            fill
+            sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+            className="object-contain rounded-lg"
+          />
         </div>
         <div className="md:w-1/2 text-center md:text-left mt-6 md:mt-0">
           <h1 className="text-4xl font-bold uppercase">ZX9 Speaker</h1>
@@ -33,16 +31,15 @@ const ProductPage = () => {
       </section>
 
       {/* ZX7 Speaker Section */}
-      <section className="mt-12 px-6 md:px-28 py-16 relative">
-        <div
-          className="w-full h-64 rounded-lg relative"
-          style={{
-            backgroundImage: 'url("/Bitmap-long.png")',
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        >
+      <section className="mt-12 px-6 md:px-28 py-16">
+        <div className="relative w-full h-64 rounded-lg overflow-hidden">
+          <Image
+            src="/Bitmap-long.png"
+            alt="ZX7 Speaker"
+            fill
+            sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+            className="rounded-lg object-cover"
+          />
           <div className="absolute inset-0 flex flex-col items-center md:items-start justify-center px-6 md:px-12 bg-black bg-opacity-50 text-white rounded-lg">
             <h2 className="text-2xl font-bold uppercase">ZX7 Speaker</h2>
             <Link
@@ -57,19 +54,20 @@ const ProductPage = () => {
 
       {/* YX1 Earphones Section */}
       <section className="mt-12 px-6 md:px-28 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div
-          className="relative bg-black text-white py-16 px-8 rounded-lg flex flex-col items-center md:items-start"
-          style={{
-            backgroundImage: 'url("/Group 12.png")',
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        >
-          <h2 className="text-2xl font-bold uppercase">YX1 Earphones</h2>
+        <div className="relative w-full h-64 bg-black text-white py-16 px-8 rounded-lg">
+          <Image
+            src="/Group 12.png"
+            alt="YX1 Earphones"
+            fill
+            sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+            className="absolute inset-0 object-cover rounded-lg"
+          />
+          <h2 className="relative text-2xl font-bold uppercase z-10">
+            YX1 Earphones
+          </h2>
           <Link
             href="/products/yx1-earphones"
-            className="inline-block mt-6 py-2 px-6 bg-transparent border border-white text-white uppercase text-sm font-bold rounded-lg transition-colors hover:bg-black hover:text-white"
+            className="relative z-10 inline-block mt-6 py-2 px-6 bg-transparent border border-white text-white uppercase text-sm font-bold rounded-lg transition-colors hover:bg-black hover:text-white"
           >
             See Product
           </Link>
@@ -103,13 +101,13 @@ const ProductPage = () => {
             make Audiophile the best place to buy your portable audio equipment.
           </p>
         </div>
-        <div className="relative h-96">
+        <div className="relative w-full h-96 rounded-lg overflow-hidden">
           <Image
             src="/human.png"
             alt="About Us"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
+            fill
+            sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+            className="object-cover rounded-lg"
           />
         </div>
       </section>
