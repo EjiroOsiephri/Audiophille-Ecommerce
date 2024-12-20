@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import human from "../../public/human.png";
 
 const ProductPage = () => {
   return (
@@ -103,7 +104,7 @@ const ProductPage = () => {
         </div>
         <div className="relative w-full h-96 rounded-lg overflow-hidden">
           <Image
-            src="/human.png"
+            src={human}
             alt="About Us"
             fill
             sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
