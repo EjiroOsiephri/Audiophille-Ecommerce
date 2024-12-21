@@ -28,7 +28,7 @@ export default function FeaturedProduct() {
             made for the passionate music enthusiast.
           </p>
           <Link
-            href="/products/xx99-mark-ii"
+            href="/products/firstheadset"
             className="bg-[#D87D4A] hover:bg-[#FBAF85] text-white font-semibold py-3 px-8 uppercase tracking-widest rounded-md transition-all duration-300 inline-block"
           >
             See Product
@@ -49,7 +49,7 @@ export default function FeaturedProduct() {
             made for the passionate music enthusiast.
           </p>
           <Link
-            href="/products/xx99-mark-ii"
+            href="/products/firstheadset"
             className="bg-[#D87D4A] hover:bg-[#FBAF85] text-white font-semibold py-3 px-8 uppercase tracking-widest rounded-md transition-all duration-300 inline-block"
           >
             See Product
