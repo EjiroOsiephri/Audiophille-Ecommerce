@@ -39,7 +39,7 @@ const HeadphonesComponent = () => {
               sound quality.
             </p>
             <Link
-              href="/products/xx99-mark-ii"
+              href="/products/firstheadset"
               className="inline-block mt-6 py-2 px-6 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-lg hover:bg-[#f09c6a]"
             >
               See Product
@@ -69,7 +69,7 @@ const HeadphonesComponent = () => {
               and music lovers alike.
             </p>
             <Link
-              href="/products/xx99-mark-i"
+              href="/products/secondheadset"
               className="inline-block mt-6 py-2 px-6 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-lg hover:bg-[#f09c6a]"
             >
               See Product
@@ -98,7 +98,7 @@ const HeadphonesComponent = () => {
               with the XX59 headphones. Perfect for all situations on the go.
             </p>
             <Link
-              href="/products/xx59"
+              href="/products/thirdheadset"
               className="inline-block mt-6 py-2 px-6 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-lg hover:bg-[#f09c6a]"
             >
               See Product
