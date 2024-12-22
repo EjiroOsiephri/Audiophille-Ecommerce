@@ -36,7 +36,7 @@ const EarphonesComponent = () => {
               cancellation feature.
             </p>
             <Link
-              href="/products/ZX9"
+              href="/products/firstearphones"
               className="inline-block mt-6 py-2 px-6 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-lg hover:bg-[#f09c6a]"
             >
               See Product
