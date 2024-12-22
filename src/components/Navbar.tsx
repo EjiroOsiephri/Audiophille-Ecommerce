@@ -4,19 +4,17 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/index";
 import CartModal from "../components/CartComponent";
 import cartImage from "../../public/Combined Shape.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const pathname = usePathname();
 
-  const dummyCartItems = [
-    { name: "XX99 MK II", quantity: 1, price: 2999 },
-    { name: "XX59", quantity: 2, price: 899 },
-    { name: "YX1", quantity: 1, price: 599 },
-  ];
+  const pathname = usePathname();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleCart = () => setIsCartOpen(!isCartOpen);
@@ -86,9 +84,9 @@ export default function Navbar() {
           <div onClick={toggleCart} className="relative cursor-pointer">
             <Image src={cartImage} alt="Shopping Cart" width={24} height={24} />
             {/* Badge showing number of cart items */}
-            {dummyCartItems.length > 0 && (
+            {cartItems.length > 0 && (
               <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {dummyCartItems.length}
+                {cartItems.length}
               </div>
             )}
           </div>
@@ -131,9 +129,7 @@ export default function Navbar() {
       </nav>
 
       {/* Cart Modal */}
-      {isCartOpen && (
-        <CartModal cartItems={dummyCartItems} onClose={toggleCart} />
-      )}
+      {isCartOpen && <CartModal onClose={toggleCart} />}
     </>
   );
 }
