@@ -4,9 +4,9 @@ import Link from "next/link";
 import img1 from "../../../public/Bitmap (78).png"; // Replace with the correct path
 import img2 from "../../../public/Bitmap (77).png";
 import img3 from "../../../public/Bitmap (79).png";
-import product1 from "../../../public/image-removebg-preview(49).png";
-import product2 from "../../../public/image-removebg-preview(41) (1).png";
-import product3 from "../../../public/image-removebg-preview(48) (1).png";
+import product2 from "../../../public/image-removebg-preview(48).png";
+import product1 from "../../../public/image-removebg-preview(41) (1).png";
+import product3 from "../../../public/image-removebg-preview(38).png";
 
 const FirstEarphoneGalleryComponent = () => {
   return (
