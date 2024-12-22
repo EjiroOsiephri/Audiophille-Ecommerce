@@ -1,8 +1,30 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import imageone from "../../../public/Group 3.png";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/features/cartSlice";
+import { useState } from "react";
 
 const SecondHeadPhoneComponent = () => {
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+
+  const handleIncrease = () => setQuantity((prev) => prev + 1);
+  const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        name: "XX99 Mark I Headphones",
+        quantity,
+        price: 2999,
+      })
+    );
+    setQuantity(1);
+  };
+
   return (
     <div className="bg-white px-6 md:px-20 py-10">
       {/* Go Back Link */}
@@ -42,15 +64,24 @@ const SecondHeadPhoneComponent = () => {
           <p className="text-2xl  text-[#000000] font-bold mb-6">$ 1,750</p>
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center border border-gray-300 rounded-md">
-              <button className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100">
+              <button
+                onClick={handleDecrease}
+                className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100"
+              >
                 -
               </button>
-              <span className="px-4  text-[#000000] py-2">1</span>
-              <button className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100">
+              <span className="px-4  text-[#000000] py-2">{quantity}</span>
+              <button
+                onClick={handleIncrease}
+                className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100"
+              >
                 +
               </button>
             </div>
-            <button className="px-6 py-2 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-md hover:bg-[#f09c6a]">
+            <button
+              className="px-6 py-2 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-md hover:bg-[#f09c6a]"
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </button>
           </div>
