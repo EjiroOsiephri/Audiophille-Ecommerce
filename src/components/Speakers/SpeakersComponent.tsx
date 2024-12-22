@@ -37,7 +37,7 @@ const SpeakersComponent = () => {
               practical audio setups.
             </p>
             <Link
-              href="/products/ZX9"
+              href="/products/firstspeaker"
               className="inline-block mt-6 py-2 px-6 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-lg hover:bg-[#f09c6a]"
             >
               See Product
@@ -67,7 +67,7 @@ const SpeakersComponent = () => {
               use.
             </p>
             <Link
-              href="/products/ZX7"
+              href="/products/firstspeaker"
               className="inline-block mt-6 py-2 px-6 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-lg hover:bg-[#f09c6a]"
             >
               See Product

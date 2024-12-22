@@ -44,7 +44,7 @@ const ProductPage = () => {
           <div className="absolute inset-0 flex flex-col items-center md:items-start justify-center px-6 md:px-12 bg-black bg-opacity-50 text-white rounded-lg">
             <h2 className="text-2xl font-bold uppercase">ZX7 Speaker</h2>
             <Link
-              href="/products/zx7-speaker"
+              href="/products/firstspeaker"
               className="inline-block mt-6 py-3 px-8 bg-transparent border border-white text-white uppercase text-sm font-bold rounded-lg transition-colors hover:bg-black hover:text-white"
             >
               See Product
