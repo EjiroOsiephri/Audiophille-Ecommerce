@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
-import { RootState } from "../components/store/index"; // Adjust to your store's path
+import { RootState } from "../components/store/index";
 import { log } from "node:console";
 
 export default function CheckoutPage() {
@@ -93,6 +93,8 @@ export default function CheckoutPage() {
         const data = await response.json();
         if (data.authorization_url) {
           window.location.href = data.authorization_url;
+
+          router.push("/success");
         } else {
           setPaymentMessage("Failed to initialize Paystack payment.");
         }
