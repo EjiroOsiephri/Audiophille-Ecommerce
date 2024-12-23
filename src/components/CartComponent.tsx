@@ -1,6 +1,7 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation"; // Import useRouter
 import { RootState } from "./store"; // Adjust the path to your store file
 import {
   increaseQuantity,
@@ -13,6 +14,7 @@ import image from "../../public/image-removebg-preview(47).png";
 
 export default function CartComponent({ onClose }: { onClose: () => void }) {
   const dispatch = useDispatch();
+  const router = useRouter(); // Initialize the router
   const items = useSelector((state: RootState) => state.cart.items);
 
   const total = items.reduce(
@@ -106,7 +108,10 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
               <p className="text-lg font-bold">Total</p>
               <p className="text-lg font-bold text-gray-900">${total}</p>
             </div>
-            <button className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]">
+            <button
+              onClick={() => router.push("/checkout")} // Navigate to /checkout
+              className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]"
+            >
               Checkout
             </button>
           </>
