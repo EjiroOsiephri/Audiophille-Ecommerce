@@ -1,6 +1,7 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { RootState } from "./store"; // Adjust the path to your store file
 import {
   increaseQuantity,
@@ -14,12 +15,18 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.cart.items);
 
+  const router = useRouter();
+
   const total = items.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
   );
 
   const isEmpty = items.length === 0;
+
+  const handleNavigation = () => {
+    router.push("/checkout");
+  };
 
   return (
     <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center sm:justify-center md:justify-end bg-black bg-opacity-40">
@@ -95,7 +102,10 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
               <p className="text-lg font-bold">Total</p>
               <p className="text-lg font-bold text-gray-900">${total}</p>
             </div>
-            <button className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]">
+            <button
+              onClick={handleNavigation}
+              className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]"
+            >
               Checkout
             </button>
           </>
