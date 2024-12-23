@@ -6,6 +6,8 @@ import imageone from "../../../public/Group 3.png";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/features/cartSlice";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SecondHeadPhoneComponent = () => {
   const [quantity, setQuantity] = useState(1);
@@ -19,15 +21,26 @@ const SecondHeadPhoneComponent = () => {
       addToCart({
         name: "XX99 Mark I Headphones",
         quantity,
-        price: 2999,
+        price: 1750,
+        image: "/Group 3.png",
       })
     );
+    toast.success("Item added to cart! Click on Cart to view.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     setQuantity(1);
   };
 
   return (
     <div className="bg-white px-6 md:px-20 py-10">
-      {/* Go Back Link */}
+      <ToastContainer />
       <div className="mb-6">
         <Link href="/" className="text-gray-500 hover:text-gray-800">
           Go Back

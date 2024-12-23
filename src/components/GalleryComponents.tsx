@@ -72,9 +72,9 @@ const GalleryComponent = () => {
               </div>
               <h3 className="mt-6 text-[#000000] text-xl font-semibold uppercase text-center">
                 {index === 0
-                  ? "XX99 MARK I"
-                  : index === 1
                   ? "XX59"
+                  : index === 1
+                  ? "XX99 Mark I"
                   : "ZX9 SPEAKER"}
               </h3>
               <Link

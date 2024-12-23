@@ -48,7 +48,7 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
               className="flex items-center justify-between border-b pb-4"
             >
               <Image
-                src={image}
+                src={item?.image || image}
                 alt={item.name}
                 width={50}
                 height={50}

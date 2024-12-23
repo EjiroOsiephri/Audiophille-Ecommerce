@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/features/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import imageone from "../../../public/image-removebg-preview(47).png";
 
 export default function FirstHeadPhoneComponent() {
@@ -20,13 +22,25 @@ export default function FirstHeadPhoneComponent() {
         name: "XX99 Mark II Headphones",
         quantity,
         price: 2999,
+        image: "/Bitmap.png",
       })
     );
+    toast.success("Item added to cart! Click on Cart to view.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     setQuantity(1);
   };
 
   return (
     <div className="bg-white px-6 md:px-20 py-10">
+      <ToastContainer />
       <div className="mb-6">
         <Link href="/" className="text-gray-500 hover:text-gray-800">
           Go Back
