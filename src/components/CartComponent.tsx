@@ -8,6 +8,7 @@ import {
   removeAllItems,
 } from "./store/features/cartSlice";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import image from "../../public/image-removebg-preview(47).png";
 
 export default function CartComponent({ onClose }: { onClose: () => void }) {
@@ -23,8 +24,16 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center md:justify-end bg-black bg-opacity-40">
-      <div
-        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative  transform transition-transform duration-300 ${
+      <motion.div
+        initial={{ y: "-100%", opacity: 0, scale: 0.9 }} // Start off-screen, slightly smaller
+        animate={{ y: 0, opacity: 1, scale: 1 }} // Slide in and grow to normal size
+        exit={{ y: "-100%", opacity: 0, scale: 0.9 }} // Shrink and slide out
+        transition={{
+          type: "tween", // Fast, linear transition
+          duration: 0.005, // Very quick for a snappy effect
+          ease: "easeOut", // Smooth deceleration
+        }}
+        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative transform transition-transform duration-300 ${
           isEmpty ? "relative right-7 -top-14" : "relative right-7 top-0"
         } max-h-[99vh] overflow-y-auto`}
       >
@@ -102,7 +111,7 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
             </button>
           </>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

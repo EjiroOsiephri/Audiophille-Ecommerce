@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import speaker from "../../public/image-removebg-preview(38).png";
-import headphone from "../../public/image-removebg-preview(42).png";
-import earphone from "../../public/image-removebg-preview(41).png";
+import earphone from "../../public/image-removebg-preview(42).png";
+import headphone from "../../public/image-removebg-preview(41).png";
 
 const categories = [
   {
