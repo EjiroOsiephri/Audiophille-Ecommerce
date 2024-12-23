@@ -1,11 +1,46 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import imageone from "../../../public/image-removebg-preview(38) (2).png";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/features/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 
 const FirstSpeakerComponent = () => {
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+
+  const handleIncrease = () => setQuantity((prev) => prev + 1);
+  const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        name: " ZX9 SPEAKER",
+        quantity,
+        price: 4500,
+        image: "/image-removebg-preview(38) (2).png",
+      })
+    );
+    toast.success("Item added to cart! Click on Cart to view.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    setQuantity(1);
+  };
+
   return (
     <div className="bg-white px-6 md:px-20 py-10">
-      {/* Go Back Link */}
+      <ToastContainer />
       <div className="mb-6">
         <Link href="/" className="text-gray-500 hover:text-gray-800">
           Go Back
@@ -43,15 +78,24 @@ const FirstSpeakerComponent = () => {
           <p className="text-2xl  text-[#000000] font-bold mb-6">$ 4,500</p>
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center border border-gray-300 rounded-md">
-              <button className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100">
+              <button
+                onClick={handleDecrease}
+                className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100"
+              >
                 -
               </button>
-              <span className="px-4  text-[#000000] py-2">1</span>
-              <button className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100">
+              <span className="px-4  text-[#000000] py-2">{quantity}</span>
+              <button
+                onClick={handleIncrease}
+                className="px-4 py-2 font-bold text-gray-500 hover:bg-gray-100"
+              >
                 +
               </button>
             </div>
-            <button className="px-6 py-2 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-md hover:bg-[#f09c6a]">
+            <button
+              onClick={handleAddToCart}
+              className="px-6 py-2 bg-[#D87D4A] text-white uppercase text-sm font-bold rounded-md hover:bg-[#f09c6a]"
+            >
               Add to Cart
             </button>
           </div>
