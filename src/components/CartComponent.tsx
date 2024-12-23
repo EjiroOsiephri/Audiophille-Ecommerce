@@ -19,29 +19,39 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
     0
   );
 
+  const isEmpty = items.length === 0;
+
   return (
-    <div
-      className={`fixed inset-0 z-50 text-[#000000] flex items-center justify-center md:justify-end bg-black bg-opacity-40`}
-    >
+    <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center md:justify-end bg-black bg-opacity-40">
       <div
-        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative transform md:translate-x-[-20px] md:translate-y-[-40px] min-h-[500px]`}
+        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative  transform transition-transform duration-300 ${
+          isEmpty ? "relative right-7 -top-14" : "relative right-7 top-0"
+        } max-h-[99vh] overflow-y-auto`}
       >
         <button
           onClick={onClose}
-          className="absolute top-0 right-2 text-gray-600 hover:text-black text-2xl font-bold"
+          className="absolute top-1 right-2 text-gray-600 hover:text-black text-2xl font-bold"
         >
           &times;
         </button>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-bold">Cart ({items.length})</h2>
-          <button
-            onClick={() => dispatch(removeAllItems())}
-            className="text-sm text-[#D87D4A] uppercase font-semibold"
-          >
-            Remove all
-          </button>
+          {items.length > 0 && (
+            <button
+              onClick={() => dispatch(removeAllItems())}
+              className="text-sm text-[#D87D4A] uppercase font-semibold"
+            >
+              Remove all
+            </button>
+          )}
         </div>
-        <ul className="space-y-6">
+        <ul
+          className={`space-y-6 ${
+            isEmpty
+              ? "flex justify-center items-center h-64"
+              : "overflow-y-auto max-h-[60vh] pr-2"
+          }`}
+        >
           {items.map((item, index) => (
             <li
               key={index}
@@ -77,20 +87,20 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
               </div>
             </li>
           ))}
-          {items.length === 0 && (
-            <div className="flex justify-center items-center h-full">
-              <p className="text-center text-gray-500">Your cart is empty.</p>
-            </div>
+          {isEmpty && (
+            <p className="text-center text-gray-500">Your cart is empty.</p>
           )}
         </ul>
-        <div className="mt-6 flex justify-between items-center">
-          <p className="text-lg font-bold">Total</p>
-          <p className="text-lg font-bold text-gray-900">${total}</p>
-        </div>
         {items.length > 0 && (
-          <button className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]">
-            Checkout
-          </button>
+          <>
+            <div className="mt-6 flex justify-between items-center">
+              <p className="text-lg font-bold">Total</p>
+              <p className="text-lg font-bold text-gray-900">${total}</p>
+            </div>
+            <button className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]">
+              Checkout
+            </button>
+          </>
         )}
       </div>
     </div>
