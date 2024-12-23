@@ -1,7 +1,6 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/navigation"; // Import useRouter
 import { RootState } from "./store"; // Adjust the path to your store file
 import {
   increaseQuantity,
@@ -9,12 +8,10 @@ import {
   removeAllItems,
 } from "./store/features/cartSlice";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import image from "../../public/image-removebg-preview(47).png";
 
 export default function CartComponent({ onClose }: { onClose: () => void }) {
   const dispatch = useDispatch();
-  const router = useRouter(); // Initialize the router
   const items = useSelector((state: RootState) => state.cart.items);
 
   const total = items.reduce(
@@ -25,19 +22,9 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
   const isEmpty = items.length === 0;
 
   return (
-    <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center md:justify-end bg-black bg-opacity-40">
-      <motion.div
-        initial={{ y: "-100%", opacity: 0, scale: 0.9 }} // Start off-screen, slightly smaller
-        animate={{ y: 0, opacity: 1, scale: 1 }} // Slide in and grow to normal size
-        exit={{ y: "-100%", opacity: 0, scale: 0.9 }} // Shrink and slide out
-        transition={{
-          type: "tween", // Fast, linear transition
-          duration: 0.005, // Very quick for a snappy effect
-          ease: "easeOut", // Smooth deceleration
-        }}
-        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative transform transition-transform duration-300 ${
-          isEmpty ? "relative right-7 -top-14" : "relative right-7 top-0"
-        } max-h-[99vh] overflow-y-auto`}
+    <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center sm:justify-center md:justify-end bg-black bg-opacity-40">
+      <div
+        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative transform transition-transform duration-300 max-h-[99vh] overflow-y-auto`}
       >
         <button
           onClick={onClose}
@@ -108,15 +95,12 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
               <p className="text-lg font-bold">Total</p>
               <p className="text-lg font-bold text-gray-900">${total}</p>
             </div>
-            <button
-              onClick={() => router.push("/checkout")} // Navigate to /checkout
-              className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]"
-            >
+            <button className="w-full mt-6 py-3 bg-[#D87D4A] text-white text-sm uppercase font-semibold rounded-lg hover:bg-[#bf5f33]">
               Checkout
             </button>
           </>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }

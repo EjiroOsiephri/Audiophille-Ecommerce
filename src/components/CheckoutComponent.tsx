@@ -60,20 +60,22 @@ export default function CheckoutPage() {
                     className="w-16 h-16 object-cover rounded-md"
                   />
                   <div>
-                    <h3 className="font-bold text-gray-900">{item.name}</h3>
-                    <h3 className="text-sm text-gray-600">
+                    <p className="font-bold text-gray-900">{item.name}</p>
+                    <p className="text-sm text-gray-600">
                       ${item.price} x {item.quantity}
-                    </h3>
+                    </p>
                   </div>
                 </div>
-                <h3 className="font-bold text-[#D87D4A]">
+                <p className="font-bold text-[#D87D4A]">
                   ${item.price * item.quantity}
-                </h3>
+                </p>
               </li>
             ))}
           </ul>
           <div className="mt-8">
-            <SummaryRow label="Total" value={`$${total}`} />
+            <h1>
+              <SummaryRow label="Total" value={`$${total}`} />
+            </h1>
             <SummaryRow label="Shipping" value={`$${shipping}`} />
             <SummaryRow label="VAT (included)" value={`$${vat}`} />
             <SummaryRow label="Grand Total" value={`$${grandTotal}`} bold />
