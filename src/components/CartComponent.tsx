@@ -29,9 +29,9 @@ export default function CartComponent({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center sm:justify-center md:justify-end bg-black bg-opacity-40">
+    <div className="fixed inset-0 z-50 text-[#000000] flex items-center justify-center sm:justify-center md:justify-end  bg-black bg-opacity-40">
       <div
-        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative transform transition-transform duration-300 max-h-[99vh] overflow-y-auto`}
+        className={`bg-white w-11/12 max-w-md rounded-lg p-6 shadow-lg relative transform transition-transform duration-300 md:mr-10 max-h-[99vh] overflow-y-auto`}
       >
         <button
           onClick={onClose}

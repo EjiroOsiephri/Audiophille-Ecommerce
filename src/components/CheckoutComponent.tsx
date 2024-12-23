@@ -2,10 +2,16 @@
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { loadStripe } from "@stripe/stripe-js";
 import { RootState } from "../components/store/index"; // Adjust to your store's path
+import { log } from "node:console";
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const items = useSelector((state: RootState) => state.cart.items);
+
+  const quantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const total = items.reduce(
     (sum, item) => sum + item.quantity * item.price,
@@ -15,7 +21,6 @@ export default function CheckoutPage() {
   const shipping = 50; // Flat shipping rate
   const grandTotal = total + shipping + parseFloat(vat);
 
-  // Form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,16 +29,17 @@ export default function CheckoutPage() {
     zipCode: "",
     city: "",
     country: "",
-    paymentMethod: "", // Track selected payment method
+    paymentMethod: "",
   });
 
   const [formValid, setFormValid] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState("");
 
   const handleInputChange = (field: string, value: string) => {
     const updatedFormData = { ...formData, [field]: value };
     setFormData(updatedFormData);
 
-    // Check if all fields are filled and a payment method is selected
     const allFieldsFilled = Object.values(updatedFormData).every(
       (input, index) =>
         (index < Object.keys(updatedFormData).length - 1 &&
@@ -43,13 +49,68 @@ export default function CheckoutPage() {
     setFormValid(allFieldsFilled);
   };
 
+  const handlePayment = async () => {
+    if (!formValid) return;
+    setLoading(true);
+    setPaymentMessage("");
+
+    const payload = {
+      amount: grandTotal, // Convert to cents
+      product_name: formData.email,
+      quantity: quantity,
+    };
+
+    const paystackPayload = {
+      amount: grandTotal, // Convert to cents
+      email: formData.email,
+      reference: "audiophille-" + Math.floor(Math.random() * 1000000000),
+    };
+
+    try {
+      if (formData.paymentMethod === "Pay with Stripe") {
+        const response = await fetch(
+          "https://audiophille-backend.onrender.com/api/payments/stripe/checkout-session/",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
+        const data = await response.json();
+
+        console.log(data);
+
+        router.push(data.url);
+      } else if (formData.paymentMethod === "Pay with PayStack") {
+        const response = await fetch(
+          "https://audiophille-backend.onrender.com/api/payments/paystack/",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(paystackPayload),
+          }
+        );
+        const data = await response.json();
+        if (data.authorization_url) {
+          window.location.href = data.authorization_url;
+        } else {
+          setPaymentMessage("Failed to initialize Paystack payment.");
+        }
+      }
+    } catch (error) {
+      console.error("Payment Error:", error);
+      setPaymentMessage("An error occurred while processing the payment.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen text-black bg-gray-100 flex justify-center items-center p-4">
       <div className="bg-white max-w-6xl w-full rounded-lg shadow-lg overflow-hidden grid grid-cols-1 lg:grid-cols-2">
         {/* Left Side: Form */}
         <div className="p-8">
           <h1 className="text-3xl font-bold mb-6">Checkout</h1>
-          {/* Billing Details */}
           <SectionHeader title="Billing Details" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <InputField
@@ -71,8 +132,6 @@ export default function CheckoutPage() {
               onChange={(e) => handleInputChange("phone", e.target.value)}
             />
           </div>
-
-          {/* Shipping Info */}
           <SectionHeader title="Shipping Info" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <InputField
@@ -101,17 +160,12 @@ export default function CheckoutPage() {
               onChange={(e) => handleInputChange("country", e.target.value)}
             />
           </div>
-
-          {/* Payment Details */}
           <SectionHeader title="Payment Details" />
-          <div className="mb-6">
-            <PaymentMethod
-              selected={formData.paymentMethod}
-              onChange={(value) => handleInputChange("paymentMethod", value)}
-            />
-          </div>
+          <PaymentMethod
+            selected={formData.paymentMethod}
+            onChange={(value) => handleInputChange("paymentMethod", value)}
+          />
         </div>
-
         {/* Right Side: Summary */}
         <div className="bg-gray-50 p-8">
           <h1 className="text-2xl font-bold mb-6">Summary</h1>
@@ -161,7 +215,7 @@ export default function CheckoutPage() {
               </p>
             </div>
             <div className="flex justify-between items-center border-t pt-4">
-              <p className="text-2xl font-extrabold text-gray-800 uppercase">
+              <p className="text-lg font-bold text-gray-600 uppercase">
                 Grand Total
               </p>
               <p className="text-2xl font-extrabold text-[#D87D4A]">
@@ -170,22 +224,27 @@ export default function CheckoutPage() {
             </div>
           </div>
           <button
+            onClick={handlePayment}
             className={`w-full mt-6 py-3 text-white text-lg uppercase font-semibold rounded-lg ${
-              formValid
+              formValid && !loading
                 ? "bg-[#D87D4A] hover:bg-[#bf5f33]"
                 : "bg-gray-300 cursor-not-allowed"
             }`}
-            disabled={!formValid}
+            disabled={!formValid || loading}
           >
-            Continue & Pay
+            {loading ? "Processing..." : "Continue & Pay"}
           </button>
+          {paymentMessage && (
+            <p className="mt-4 text-center text-sm text-red-600">
+              {paymentMessage}
+            </p>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-// Reusable Components
 const SectionHeader = ({ title }: { title: string }) => (
   <h3 className="text-lg font-bold text-[#D87D4A] mb-4">{title}</h3>
 );
