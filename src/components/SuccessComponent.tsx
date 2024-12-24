@@ -3,6 +3,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../components/store/index";
+import { useRouter } from "next/navigation";
 
 const SuccessComponent = () => {
   const items = useSelector((state: RootState) => state.cart.items);
@@ -11,6 +12,8 @@ const SuccessComponent = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const router = useRouter();
 
   return (
     <div className="container text-black mx-auto px-4 py-12">
@@ -67,7 +70,12 @@ const SuccessComponent = () => {
         </div>
 
         {/* Back to Home Button */}
-        <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded">
+        <button
+          onClick={() => {
+            router.push("/");
+          }}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded"
+        >
           Back to Home
         </button>
       </div>

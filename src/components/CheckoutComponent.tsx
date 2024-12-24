@@ -10,7 +10,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const items = useSelector((state: RootState) => state.cart.items);
 
-  const quantity = items.reduce((sum, item) => sum + item.quantity, 0);
+  const quantity = items?.length;
 
   const total = items.reduce(
     (sum, item) => sum + item.quantity * item.price,
@@ -40,7 +40,7 @@ export default function CheckoutPage() {
     setFormData(updatedFormData);
 
     const allFieldsFilled = Object.values(updatedFormData).every(
-      (input) => input.trim() !== "" // Ensures no field is empty
+      (input) => input.trim() !== ""
     );
     setFormValid(allFieldsFilled);
   };
