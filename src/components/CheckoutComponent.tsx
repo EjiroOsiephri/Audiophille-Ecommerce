@@ -52,18 +52,33 @@ export default function CheckoutPage() {
     setPaymentMessage("");
 
     const payload = {
-      amount: grandTotal, // Convert to cents
-      product_name: formData.email,
+      amount: grandTotal,
+      product_name: "Order for Audiophille Products",
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      zipCode: formData.zipCode,
+      city: formData.city,
+      country: formData.country,
       quantity: quantity,
     };
 
     const paystackPayload = {
-      amount: grandTotal, // Convert to cents
+      amount: grandTotal,
       email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
       reference: "audiophille-" + Math.floor(Math.random() * 1000000000),
+      metadata: {
+        name: formData.name,
+        city: formData.city,
+        country: formData.country,
+        zipCode: formData.zipCode,
+        paymentMethod: formData.paymentMethod,
+      },
     };
 
-    console.log(paystackPayload.reference);
+    console.log("Paystack Reference:", paystackPayload.reference);
 
     try {
       if (formData.paymentMethod === "Pay with Stripe") {
@@ -77,9 +92,11 @@ export default function CheckoutPage() {
         );
         const data = await response.json();
 
-        console.log(data);
-
-        router.push(data.url);
+        if (data.url) {
+          router.push(data.url);
+        } else {
+          setPaymentMessage("Failed to initialize Stripe payment.");
+        }
       } else if (formData.paymentMethod === "Pay with PayStack") {
         const response = await fetch(
           "https://audiophille-backend.onrender.com/api/payments/paystack/",
@@ -95,16 +112,25 @@ export default function CheckoutPage() {
           window.location.href = data.authorization_url;
 
           const checkPaymentStatus = async () => {
-            const paymentStatus = await fetch(
-              `https://audiophille-backend.onrender.com/api/payments/paystack/verify/${paystackPayload.reference}`
-            );
-            const statusData = await paymentStatus.json();
+            try {
+              const paymentStatus = await fetch(
+                `https://audiophille-backend.onrender.com/api/payments/paystack/verify/${paystackPayload.reference}`
+              );
+              const statusData = await paymentStatus.json();
 
-            if (statusData.status === "success") {
-              router.push("/success");
-            } else {
+              console.log(statusData);
+
+              if (statusData.data && statusData.data.status === "success") {
+                router.push("/success");
+              } else {
+                setPaymentMessage(
+                  "Payment verification failed. Please try again."
+                );
+              }
+            } catch (error) {
+              console.error("Error checking payment status:", error);
               setPaymentMessage(
-                "Payment verification failed. Please try again."
+                "An error occurred while verifying the payment."
               );
             }
           };
