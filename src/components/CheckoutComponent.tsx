@@ -41,10 +41,7 @@ export default function CheckoutPage() {
     setFormData(updatedFormData);
 
     const allFieldsFilled = Object.values(updatedFormData).every(
-      (input, index) =>
-        (index < Object.keys(updatedFormData).length - 1 &&
-          input.trim() !== "") ||
-        updatedFormData.paymentMethod !== ""
+      (input) => input.trim() !== "" // Ensures no field is empty
     );
     setFormValid(allFieldsFilled);
   };
@@ -65,6 +62,8 @@ export default function CheckoutPage() {
       email: formData.email,
       reference: "audiophille-" + Math.floor(Math.random() * 1000000000),
     };
+
+    console.log(paystackPayload.reference);
 
     try {
       if (formData.paymentMethod === "Pay with Stripe") {
@@ -91,10 +90,26 @@ export default function CheckoutPage() {
           }
         );
         const data = await response.json();
+
         if (data.authorization_url) {
           window.location.href = data.authorization_url;
 
-          router.push("/success");
+          const checkPaymentStatus = async () => {
+            const paymentStatus = await fetch(
+              `https://audiophille-backend.onrender.com/api/payments/paystack/verify/${paystackPayload.reference}`
+            );
+            const statusData = await paymentStatus.json();
+
+            if (statusData.status === "success") {
+              router.push("/success");
+            } else {
+              setPaymentMessage(
+                "Payment verification failed. Please try again."
+              );
+            }
+          };
+
+          setTimeout(checkPaymentStatus, 5000);
         } else {
           setPaymentMessage("Failed to initialize Paystack payment.");
         }
