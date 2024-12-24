@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import { RootState } from "../components/store/index";
-import { log } from "node:console";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -321,25 +320,23 @@ const PaymentMethod = ({
   onChange: (value: string) => void;
 }) => (
   <div className="space-y-4">
-    {["Pay with Stripe", "Pay with PayStack", "Pay with Crypto"].map(
-      (method) => (
-        <label
-          key={method}
-          className={`flex bg-gray-200 p-5 items-center space-x-3 ${
-            selected === method ? "ring-2 ring-[#D87D4A]" : ""
-          }`}
-        >
-          <input
-            type="radio"
-            name="paymentMethod"
-            value={method}
-            checked={selected === method}
-            onChange={() => onChange(method)}
-            className="w-4 h-4 text-[#D87D4A] focus:ring-[#D87D4A] border-gray-300"
-          />
-          <span className="text-sm font-medium">{method}</span>
-        </label>
-      )
-    )}
+    {["Pay with Stripe", "Pay with PayStack"].map((method) => (
+      <label
+        key={method}
+        className={`flex bg-gray-200 p-5 items-center space-x-3 ${
+          selected === method ? "ring-2 ring-[#D87D4A]" : ""
+        }`}
+      >
+        <input
+          type="radio"
+          name="paymentMethod"
+          value={method}
+          checked={selected === method}
+          onChange={() => onChange(method)}
+          className="w-4 h-4 text-[#D87D4A] focus:ring-[#D87D4A] border-gray-300"
+        />
+        <span className="text-sm font-medium">{method}</span>
+      </label>
+    ))}
   </div>
 );
