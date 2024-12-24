@@ -78,8 +78,6 @@ export default function CheckoutPage() {
       },
     };
 
-    console.log("Paystack Reference:", paystackPayload.reference);
-
     try {
       if (formData.paymentMethod === "Pay with Stripe") {
         const response = await fetch(
@@ -117,8 +115,6 @@ export default function CheckoutPage() {
                 `https://audiophille-backend.onrender.com/api/payments/paystack/verify/${paystackPayload.reference}`
               );
               const statusData = await paymentStatus.json();
-
-              console.log(statusData);
 
               if (statusData.data && statusData.data.status === "success") {
                 router.push("/success");
