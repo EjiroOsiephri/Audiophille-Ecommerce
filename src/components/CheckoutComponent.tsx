@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { loadStripe } from "@stripe/stripe-js";
 import { RootState } from "../components/store/index";
 
 export default function CheckoutPage() {
@@ -19,6 +18,8 @@ export default function CheckoutPage() {
   const vat = (total * 0.2).toFixed(2); // Example VAT calculation (20%)
   const shipping = 50; // Flat shipping rate
   const grandTotal = total + shipping + parseFloat(vat);
+
+  const stipeTotal = grandTotal / items?.length;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -51,7 +52,7 @@ export default function CheckoutPage() {
     setPaymentMessage("");
 
     const payload = {
-      amount: grandTotal,
+      amount: stipeTotal,
       product_name: "Order for Audiophille Products",
       email: formData.email,
       phone: formData.phone,
