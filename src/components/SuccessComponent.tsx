@@ -8,10 +8,16 @@ import { useRouter } from "next/navigation";
 const SuccessComponent = () => {
   const items = useSelector((state: RootState) => state.cart.items);
 
-  const grandTotal = items.reduce(
+  const total = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const vat = (total * 0.2).toFixed(2);
+
+  const shipping = 50; // Flat shipping rate
+
+  const grandTotal = total + shipping + parseFloat(vat);
 
   const router = useRouter();
 
