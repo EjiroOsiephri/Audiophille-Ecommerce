@@ -64,7 +64,7 @@ const SuccessComponent = () => {
                     : `x${items[0].quantity}`}
                 </p>
               </div>
-              <p className="font-bold">${grandTotal.toFixed(2)}</p>
+              <p className="font-bold">${total.toFixed(2)}</p>
             </div>
           </div>
         )}
