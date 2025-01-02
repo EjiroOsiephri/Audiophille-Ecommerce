@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8000
+
+  backend:
+    image: 471112792301.dkr.ecr.us-east-1.amazonaws.com/audiophile-backend:1.1
+    ports:
+      - "8000:8000"
