@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store/index";
 import CartModal from "../components/CartComponent";
 import cartImage from "../../public/Combined Shape.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -96,40 +97,34 @@ export default function Navbar() {
         <div className="hidden md:block mx-20 lg:mx-40 border-b border-[#979797]"></div>
 
         {/* Mobile Menu */}
-        <div
-          className={`absolute top-0 left-0 w-full h-screen bg-[#0E0E0E] flex flex-col items-center justify-center gap-8 text-lg font-medium transform ${
-            isMenuOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 md:hidden z-40`}
-        >
-          <Link href="/" onClick={toggleMenu} className={getLinkClass("/")}>
-            Home
-          </Link>
-          <Link
-            href="/headphones"
-            onClick={toggleMenu}
-            className={getLinkClass("/headphones")}
-          >
-            Headphones
-          </Link>
-          <Link
-            href="/speakers"
-            onClick={toggleMenu}
-            className={getLinkClass("/speakers")}
-          >
-            Speakers
-          </Link>
-          <Link
-            href="/earphones"
-            onClick={toggleMenu}
-            className={getLinkClass("/earphones")}
-          >
-            Earphones
-          </Link>
-        </div>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-[#0E0E0E] flex flex-col items-center justify-center gap-8 text-lg font-medium z-40"
+            >
+              {["/", "/headphones", "/speakers", "/earphones"].map((route) => (
+                <Link
+                  key={route}
+                  href={route}
+                  onClick={toggleMenu}
+                  className={getLinkClass(route)}
+                >
+                  {route.replace("/", "") || "Home"}
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Cart Modal */}
-      {isCartOpen && <CartModal onClose={toggleCart} />}
+      <AnimatePresence>
+        {isCartOpen && <CartModal onClose={toggleCart} />}
+      </AnimatePresence>
     </>
   );
 }

@@ -22,7 +22,7 @@ const FirstEarphoneComponent = () => {
         name: "YX1 WIRELESS EARPHONES",
         quantity,
         price: 599,
-        image: "/image-removebg-preview(38) (2).png",
+        image: "/Group 5.png",
       })
     );
     toast.success("Item added to cart! Click on Cart to view.", {
